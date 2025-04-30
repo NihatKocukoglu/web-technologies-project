@@ -48,3 +48,52 @@
     padding:6px 13px;
     font-family: sans-serif;
 }
+
+.navbar ul li a.active,
+.navbar ul li a:hover{
+    background: red;
+    border-radius: 2px;
+}
+
+.container .center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: sans-serif;
+    user-select: none;
+}
+
+.center h1{
+color:black;
+font-size: 70px;
+font-weight: bold;
+width: 900px;
+text-align:center;
+}
+
+.center h2{
+    color:black;
+    font-size: 50px;
+    font-weight: bold;
+    width: 885px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.center .buttons{
+    text-align: center;
+}
+
+.buttons button{
+    height: 50px;
+    width: 150px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #ffd1d1;
+    background: rgb(207, 96, 88);
+    border: solid 2px red;
+    cursor: pointer;
+    outline: none;
+    border-radius: 20px;
+}
