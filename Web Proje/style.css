@@ -47,6 +47,7 @@
     font-size: 20px;
     padding:6px 13px;
     font-family: sans-serif;
+    transition: .5s;
 }
 
 .navbar ul li a.active,
@@ -90,10 +91,15 @@ text-align:center;
     width: 150px;
     font-size: 18px;
     font-weight: bold;
-    color: #ffd1d1;
+    color: #febcbc;
     background: rgb(207, 96, 88);
     border: solid 2px red;
     cursor: pointer;
     outline: none;
     border-radius: 20px;
+    transition: .5s;
+}
+
+.buttons button:hover{
+    background: #fff;
 }
