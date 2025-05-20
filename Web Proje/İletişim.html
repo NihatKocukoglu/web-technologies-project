@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>İletişim</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        input, textarea, select { display: block; margin-bottom: 10px; padding: 8px; }
+        .error { color: red; font-size: 14px; }
+    </style>
+</head>
+<body>
+
+<div id="app" class="container">
+    <h2>İletişim Formu</h2>
+    <form :action="'iletisim_sonuc.php'" method="POST" @submit="vueKontrol">
+
+        <label>Ad Soyad:</label>
+        <input type="text" name="adsoyad" v-model="form.adsoyad">
+        <span class="error" v-if="hatalar.adsoyad">{{ hatalar.adsoyad }}</span>
+
+        <label>Email:</label>
+        <input type="text" name="email" v-model="form.email">
+        <span class="error" v-if="hatalar.email">{{ hatalar.email }}</span>
+
+        <label>Telefon:</label>
+        <input type="text" name="telefon" v-model="form.telefon">
+        <span class="error" v-if="hatalar.telefon">{{ hatalar.telefon }}</span>
+
+        <label>Konu:</label>
+        <select name="konu" v-model="form.konu">
+            <option value="">Seçiniz</option>
+            <option>Öneri</option>
+            <option>Şikayet</option>
+            <option>Diğer</option>
+        </select>
+        <span class="error" v-if="hatalar.konu">{{ hatalar.konu }}</span>
+
+        <label>Mesaj:</label>
+        <textarea name="mesaj" v-model="form.mesaj"></textarea>
+        <span class="error" v-if="hatalar.mesaj">{{ hatalar.mesaj }}</span>
+
+        <button type="submit">Gönder</button>
+        <button type="button" @click="temizle">Temizle</button>
+
+        <button type="button" @click="jsKontrol">JS ile Kontrol Et</button>
+    </form>
+</div>
+
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            form: {
+                adsoyad: '',
+                email: '',
+                telefon: '',
+                konu: '',
+                mesaj: ''
+            },
+            hatalar: {}
+        },
+        methods: {
+            vueKontrol(e) {
+                this.hatalar = {};
+                let gecerli = true;
+
+                if (!this.form.adsoyad) {
+                    this.hatalar.adsoyad = "Ad soyad boş olamaz.";
+                    gecerli = false;
+                }
+                if (!this.form.email || !/^\S+@\S+\.\S+$/.test(this.form.email)) {
+                    this.hatalar.email = "Geçerli bir e-posta girin.";
+                    gecerli = false;
+                }
+                if (!/^\d+$/.test(this.form.telefon)) {
+                    this.hatalar.telefon = "Telefon sadece rakamlardan oluşmalı.";
+                    gecerli = false;
+                }
+                if (!this.form.konu) {
+                    this.hatalar.konu = "Bir konu seçmelisiniz.";
+                    gecerli = false;
+                }
+                if (!this.form.mesaj) {
+                    this.hatalar.mesaj = "Mesaj boş bırakılamaz.";
+                    gecerli = false;
+                }
+
+                if (!gecerli) {
+                    e.preventDefault();
+                }
+            },
+            jsKontrol() {
+                alert("JS Kontrol: Ad = " + this.form.adsoyad + ", Email = " + this.form.email);
+                // Basit kontrol örneği
+                if (!this.form.email.includes("@")) {
+                    alert("JS kontrol sonucu: Geçersiz email.");
+                } else {
+                    alert("JS kontrol sonucu: Email geçerli.");
+                }
+            },
+            temizle() {
+                this.form = { adsoyad: '', email: '', telefon: '', konu: '', mesaj: '' };
+                this.hatalar = {};
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
