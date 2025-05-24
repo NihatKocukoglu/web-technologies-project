@@ -1,92 +1,118 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
-.container{
+body {
+    font-family: sans-serif;
+}
+
+.container {
     background-color: rgb(213, 213, 213);
-    height: 100vh;
+    min-height: 100vh;
     background-size: 100% 100%;
+    padding-top: 80px; /* Navbar'ın üstüne binmesini engeller */
 }
 
-.container .navbar{
+/* Navbar */
+.navbar {
     width: 100%;
     height: 80px;
     background: rgb(39, 39, 39);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-.navbar .logo{
-    display:inline-block;
-    margin-left: 50px;
-    margin-top: 20px;
-}
-
-.navbar .logo a{
-    text-decoration: none;
+.navbar .logo {
     font-size: 30px;
-    font-family: sans-serif;
-    color:white;
-}
-
-
-.navbar ul{
-    float:right ;
-    margin-right: 20px;
-}
-
-.navbar ul li{
-    list-style:none;
-    display: inline-block;
-    margin: 0 8px;
-    line-height: 80px;
-}
-
-.navbar ul li a{
     color: white;
     text-decoration: none;
-    font-size: 20px;
-    padding:6px 13px;
-    font-family: sans-serif;
-    transition: .5s;
 }
 
-.navbar ul li a.active,
-.navbar ul li a:hover{
-    background: red;
+.navbar ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    gap: 10px;
+}
+
+.navbar ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 6px 12px;
+    transition: 0.3s;
     border-radius: 2px;
 }
 
-.container .center{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    font-family: sans-serif;
-    user-select: none;
+.navbar ul li a.active,
+.navbar ul li a:hover {
+    background: red;
 }
 
-.center h1{
-color:black;
-font-size: 70px;
-font-weight: bold;
-width: 900px;
-text-align:center;
+/* Merkez içerik */
+.center {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    text-align: center;
 }
 
-.center h2{
-    color:black;
-    font-size: 50px;
+.center h1 {
+    color: black;
+    font-size: 48px;
     font-weight: bold;
-    width: 885px;
-    margin-top: 10px;
-    text-align: center;
+    margin-bottom: 20px;
 }
 
-.center .buttons{
-    text-align: center;
+.center h2 {
+    color: black;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 15px;
 }
 
-.buttons button{
+.center ul {
+    list-style: disc;
+    padding-left: 20px;
+    text-align: left;
+    margin: 0 auto;
+    max-width: 400px;
+}
+
+.center p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.image-gallery {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.image-gallery img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.buttons {
+    margin-top: 30px;
+}
+
+.buttons button {
     height: 50px;
     width: 150px;
     font-size: 18px;
@@ -95,11 +121,56 @@ text-align:center;
     background: rgb(207, 96, 88);
     border: solid 2px red;
     cursor: pointer;
-    outline: none;
     border-radius: 20px;
-    transition: .5s;
+    margin: 0 10px;
+    transition: 0.3s;
 }
 
-.buttons button:hover{
+.buttons button:hover {
     background: #fff;
+    color: red;
+}
+
+/* Responsive tasarım */
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .navbar ul {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    .navbar ul li a {
+        font-size: 14px;
+        padding: 5px 8px;
+    }
+
+    .center h1 {
+        font-size: 32px;
+    }
+
+    .center h2 {
+        font-size: 24px;
+    }
+
+    .center p, .center ul {
+        font-size: 16px;
+    }
+
+    .buttons button {
+        width: 120px;
+        height: 40px;
+        font-size: 14px;
+    }
+
+    .image-gallery img {
+        width: 80px;
+        height: 80px;
+    }
 }
