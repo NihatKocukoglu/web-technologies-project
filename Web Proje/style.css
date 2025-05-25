@@ -228,3 +228,96 @@ body {
     color: #333;
 }
 
+
+
+
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #d5d5d5;
+    padding: 20px;
+}
+
+.login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 100%;
+}
+
+.login-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.login-box label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.login-box input[type="text"],
+.login-box input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-box input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.login-box input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.error {
+    color: red;
+    background-color: #ffe5e5;
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+/* Responsive */
+@media screen and (max-width: 480px) {
+    .login-box {
+        padding: 20px;
+    }
+
+    .login-box h2 {
+        font-size: 22px;
+    }
+
+    .login-box input[type="submit"],
+    .buttons button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+
+
+
