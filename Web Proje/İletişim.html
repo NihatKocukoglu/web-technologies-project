@@ -1,111 +1,122 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <title>İletişim</title>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        input, textarea, select { display: block; margin-bottom: 10px; padding: 8px; }
-        .error { color: red; font-size: 14px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>İletişim</title>
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
 </head>
 <body>
 
 <div id="app" class="container">
-    <h2>İletişim Formu</h2>
-    <form :action="'iletisim_sonuc.php'" method="POST" @submit="vueKontrol">
+  <div class="navbar">
+    <ul>
+      <li><a href="/index.html">Ana Sayfa</a></li>
+      <li><a href="/hakkında.html">Hakkında</a></li>
+      <li><a href="/Özgeçmiş.html">Özgeçmiş</a></li>
+      <li><a href="/Şehrim.html">Şehrim</a></li>
+      <li><a href="/Mirasımız.html">Mirasımız</a></li>
+      <li><a href="/ilgi_alanlarım.html">İlgi Alanlarım</a></li>
+    </ul>
+  </div>
 
-        <label>Ad Soyad:</label>
-        <input type="text" name="adsoyad" v-model="form.adsoyad">
-        <span class="error" v-if="hatalar.adsoyad">{{ hatalar.adsoyad }}</span>
+  <main class="center">
+    <h1>İletişim Formu</h1>
 
-        <label>Email:</label>
-        <input type="text" name="email" v-model="form.email">
-        <span class="error" v-if="hatalar.email">{{ hatalar.email }}</span>
-
-        <label>Telefon:</label>
-        <input type="text" name="telefon" v-model="form.telefon">
-        <span class="error" v-if="hatalar.telefon">{{ hatalar.telefon }}</span>
-
-        <label>Konu:</label>
-        <select name="konu" v-model="form.konu">
-            <option value="">Seçiniz</option>
-            <option>Öneri</option>
-            <option>Şikayet</option>
-            <option>Diğer</option>
+    <form v-if="!formSubmitted" @submit.prevent="vueValidate">
+      <label>Ad Soyad: <input type="text" v-model="form.name" /></label><br/>
+      <label>Email   : <input type="email" v-model="form.email" /></label><br/>
+      <label>Telefon : <input type="text" v-model="form.phone" /></label><br/>
+      <label>Konu    :
+        <select v-model="form.subject">
+          <option value="">Seçiniz</option>
+          <option>Genel</option>
+          <option>Destek</option>
+          <option>Görüş</option>
         </select>
-        <span class="error" v-if="hatalar.konu">{{ hatalar.konu }}</span>
+      </label><br/>
+      <label>Mesaj: <textarea v-model="form.message"></textarea></label><br/>
 
-        <label>Mesaj:</label>
-        <textarea name="mesaj" v-model="form.mesaj"></textarea>
-        <span class="error" v-if="hatalar.mesaj">{{ hatalar.mesaj }}</span>
-
-        <button type="submit">Gönder</button>
-        <button type="button" @click="temizle">Temizle</button>
-
-        <button type="button" @click="jsKontrol">JS ile Kontrol Et</button>
+      <button type="submit">Gönder (Vue.js ile)</button>
+      <button type="button" @click="jsValidate">Gönder (JS ile)</button>
+      <button type="reset" @click="resetForm">Temizle</button>
     </form>
+
+    <div v-if="errors.length" style="color:red;">
+      <ul>
+        <li v-for="error in errors">{{ error }}</li>
+      </ul>
+    </div>
+
+    <div v-if="formSubmitted">
+      <h2>Gönderilen Bilgiler:</h2>
+      <ul>
+        <li><strong>Ad Soyad:</strong> {{ form.name }}</li>
+        <li><strong>Email:</strong> {{ form.email }}</li>
+        <li><strong>Telefon:</strong> {{ form.phone }}</li>
+        <li><strong>Konu:</strong> {{ form.subject }}</li>
+        <li><strong>Mesaj:</strong> {{ form.message }}</li>
+      </ul>
+      <button @click="resetForm">Yeni Form Gönder</button>
+    </div>
+  </main>
 </div>
 
 <script>
-    new Vue({
-        el: '#app',
-        data: {
-            form: {
-                adsoyad: '',
-                email: '',
-                telefon: '',
-                konu: '',
-                mesaj: ''
-            },
-            hatalar: {}
-        },
-        methods: {
-            vueKontrol(e) {
-                this.hatalar = {};
-                let gecerli = true;
+  new Vue({
+    el: "#app",
+    data: {
+      form: {
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      },
+      errors: [],
+      formSubmitted: false
+    },
+    methods: {
+      vueValidate() {
+        this.errors = [];
+        if (!this.form.name) this.errors.push("Ad Soyad boş bırakılamaz.");
+        if (!this.form.email || !this.form.email.includes("@")) this.errors.push("Geçerli bir email giriniz.");
+        if (!/^\d+$/.test(this.form.phone)) this.errors.push("Telefon sadece rakamlardan oluşmalıdır.");
+        if (!this.form.subject) this.errors.push("Konu seçilmelidir.");
+        if (!this.form.message) this.errors.push("Mesaj boş bırakılamaz.");
 
-                if (!this.form.adsoyad) {
-                    this.hatalar.adsoyad = "Ad soyad boş olamaz.";
-                    gecerli = false;
-                }
-                if (!this.form.email || !/^\S+@\S+\.\S+$/.test(this.form.email)) {
-                    this.hatalar.email = "Geçerli bir e-posta girin.";
-                    gecerli = false;
-                }
-                if (!/^\d+$/.test(this.form.telefon)) {
-                    this.hatalar.telefon = "Telefon sadece rakamlardan oluşmalı.";
-                    gecerli = false;
-                }
-                if (!this.form.konu) {
-                    this.hatalar.konu = "Bir konu seçmelisiniz.";
-                    gecerli = false;
-                }
-                if (!this.form.mesaj) {
-                    this.hatalar.mesaj = "Mesaj boş bırakılamaz.";
-                    gecerli = false;
-                }
-
-                if (!gecerli) {
-                    e.preventDefault();
-                }
-            },
-            jsKontrol() {
-                alert("JS Kontrol: Ad = " + this.form.adsoyad + ", Email = " + this.form.email);
-                // Basit kontrol örneği
-                if (!this.form.email.includes("@")) {
-                    alert("JS kontrol sonucu: Geçersiz email.");
-                } else {
-                    alert("JS kontrol sonucu: Email geçerli.");
-                }
-            },
-            temizle() {
-                this.form = { adsoyad: '', email: '', telefon: '', konu: '', mesaj: '' };
-                this.hatalar = {};
-            }
+        if (!this.errors.length) {
+          this.formSubmitted = true;
         }
-    });
+      },
+      jsValidate() {
+        this.errors = [];
+        const { name, email, phone, subject, message } = this.form;
+
+        if (!name) this.errors.push("Ad Soyad boş bırakılamaz.");
+        if (!email || !email.includes("@")) this.errors.push("Geçerli email giriniz.");
+        if (!/^\d+$/.test(phone)) this.errors.push("Telefon sadece rakam içermelidir.");
+        if (!subject) this.errors.push("Konu seçilmelidir.");
+        if (!message) this.errors.push("Mesaj boş bırakılamaz.");
+
+        if (!this.errors.length) {
+          this.formSubmitted = true;
+        }
+      },
+      resetForm() {
+        this.form = {
+          name: "",
+          email: "",
+          phone: "",
+          subject: "",
+          message: ""
+        };
+        this.errors = [];
+        this.formSubmitted = false;
+      }
+    }
+  });
 </script>
 
 </body>

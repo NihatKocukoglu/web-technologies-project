@@ -1,27 +1,31 @@
 <?php
-// Oturumu başlat
-session_start();
+// Hata mesajını tutacak değişken
+$hata = "";
 
-// Hataları göstermek için ayar
-$error = "";
+// Giriş başarılı olup olmadığını tutar
+$girisBasarili = false;
 
+// Form gönderildiğinde çalışır
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Sabit kullanıcı adı ve şifre 
-    $kullanici_adi = "b221210054@sakarya.edu.tr";
-    $sifre = "b221210054";
+    // Doğru e-posta ve şifreyi tanımla
+    $dogru_email = "b2412100001@sakarya.edu.tr";
+    $dogru_sifre = "b2412100001";
 
-    // Formdan gelen veriler
-    $gelen_kullanici = $_POST["kullanici"];
-    $gelen_sifre = $_POST["sifre"];
+    // Kullanıcıdan gelen verileri al ve boşluklarını temizle
+    $email = trim($_POST["email"]);
+    $sifre = trim($_POST["password"]);
 
-    // Kontrol
-    if ($gelen_kullanici == $kullanici_adi && $gelen_sifre == $sifre) {
-        $_SESSION["giris"] = true;
-        $_SESSION["kullanici"] = $kullanici_adi;
-        header("Location: index.html"); // Başarılıysa anasayfaya yönlendir
-        exit();
+    // Giriş bilgileri kontrolü
+    if (empty($email) || empty($sifre)) {
+        $hata = "Kullanıcı adı ve şifre boş bırakılamaz.";
+    } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $hata = "Geçerli bir e-posta adresi giriniz.";
+    } elseif ($email === $dogru_email && $sifre === $dogru_sifre) {
+        // Giriş başarılı
+        $girisBasarili = true;
     } else {
-        $error = "Kullanıcı adı veya şifre hatalı!";
+        // Bilgiler yanlış
+        $hata = "Kullanıcı adı veya şifre hatalı.";
     }
 }
 ?>
@@ -30,28 +34,78 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>Giriş Yap</title>
+    <title>Login</title>
+
+    <!-- Ortak CSS dosyasına bağlantı -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Login sayfasına özel bazı stiller -->
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 100px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #aaa;
+        }
+
+        .login-container input[type="text"],
+        .login-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .login-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .hata {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .basarili {
+            color: green;
+        }
+    </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Giriş Yap</h2>
-    <form method="POST" action="Login.php">
-        <label for="kullanici">Kullanıcı Adı:</label>
-        <input type="text" id="kullanici" name="kullanici" required>
+<!-- Login formunu saran kutu -->
+<div class="login-container">
 
-        <label for="sifre">Şifre:</label>
-        <input type="password" id="sifre" name="sifre" required>
+    <?php if ($girisBasarili): ?>
+        <!-- Giriş başarılıysa kullanıcıya mesaj -->
+        <h2 class="basarili">Hoşgeldiniz, <?php echo explode('@', $email)[0]; ?>!</h2>
 
-        <button type="submit">Giriş</button>
+    <?php else: ?>
+        <!-- Giriş formu -->
+        <h2>Giriş Yap</h2>
 
-        <?php
-        if ($error != "") {
-            echo "<p style='color:red;'>$error</p>";
-        }
-        ?>
-    </form>
+        <!-- Hata varsa göster -->
+        <?php if (!empty($hata)) echo "<div class='hata'>$hata</div>"; ?>
+
+        <!-- Form -->
+        <form method="post" action="">
+            <label for="email">Kullanıcı Adı (e-mail):</label>
+            <input type="text" name="email" id="email" value="<?php echo htmlspecialchars($email ?? '') ?>">
+
+            <label for="password">Şifre:</label>
+            <input type="password" name="password" id="password">
+
+            <input type="submit" value="Giriş Yap">
+        </form>
+    <?php endif; ?>
 </div>
 
 </body>
