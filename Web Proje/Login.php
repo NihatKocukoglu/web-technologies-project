@@ -8,8 +8,8 @@ $girisBasarili = false;
 // Form gönderildiğinde çalışır
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Doğru e-posta ve şifreyi tanımla
-    $dogru_email = "b2412100001@sakarya.edu.tr";
-    $dogru_sifre = "b2412100001";
+    $dogru_email = "b221210054@sakarya.edu.tr";
+    $dogru_sifre = "b221210054";
 
     // Kullanıcıdan gelen verileri al ve boşluklarını temizle
     $email = trim($_POST["email"]);

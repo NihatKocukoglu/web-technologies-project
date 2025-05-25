@@ -26,9 +26,9 @@
 
     <form v-if="!formSubmitted" @submit.prevent="vueValidate">
       <label>Ad Soyad: <input type="text" v-model="form.name" /></label><br/>
-      <label>Email   : <input type="email" v-model="form.email" /></label><br/>
-      <label>Telefon : <input type="text" v-model="form.phone" /></label><br/>
-      <label>Konu    :
+      <label>Email: <input type="email" v-model="form.email" /></label><br/>
+      <label>Telefon: <input type="text" v-model="form.phone" /></label><br/>
+      <label>Konu:
         <select v-model="form.subject">
           <option value="">Seçiniz</option>
           <option>Genel</option>
