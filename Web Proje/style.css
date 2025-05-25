@@ -6,13 +6,14 @@
 
 body {
     font-family: sans-serif;
+    background-color: rgb(213, 213, 213);
 }
 
+/* Container */
 .container {
-    background-color: rgb(213, 213, 213);
     min-height: 100vh;
-    background-size: 100% 100%;
-    padding-top: 80px; /* Navbar'ın üstüne binmesini engeller */
+    display: flex;
+    flex-direction: column;
 }
 
 /* Navbar */
@@ -22,90 +23,60 @@ body {
     background: rgb(39, 39, 39);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.navbar .logo {
-    font-size: 30px;
-    color: white;
-    text-decoration: none;
+    justify-content: center;
 }
 
 .navbar ul {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+}
+
+.navbar ul li {
     list-style: none;
-    gap: 10px;
+    margin: 0 10px;
 }
 
 .navbar ul li a {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    padding: 6px 12px;
+    padding: 8px 15px;
+    display: inline-block;
     transition: 0.3s;
-    border-radius: 2px;
 }
 
 .navbar ul li a.active,
 .navbar ul li a:hover {
     background: red;
+    border-radius: 3px;
 }
 
-/* Merkez içerik */
+/* Center Content */
 .center {
-    max-width: 900px;
-    margin: 0 auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     padding: 40px 20px;
     text-align: center;
 }
 
 .center h1 {
-    color: black;
-    font-size: 48px;
+    font-size: 60px;
     font-weight: bold;
+    color: black;
     margin-bottom: 20px;
 }
 
 .center h2 {
-    color: black;
-    font-size: 32px;
+    font-size: 40px;
     font-weight: bold;
-    margin-top: 40px;
-    margin-bottom: 15px;
-}
-
-.center ul {
-    list-style: disc;
-    padding-left: 20px;
-    text-align: left;
-    margin: 0 auto;
-    max-width: 400px;
-}
-
-.center p {
-    font-size: 18px;
-    margin: 10px 0;
-}
-
-.image-gallery {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 15px;
-}
-
-.image-gallery img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 5px;
+    color: black;
+    margin-bottom: 30px;
 }
 
 .buttons {
@@ -121,56 +92,96 @@ body {
     background: rgb(207, 96, 88);
     border: solid 2px red;
     cursor: pointer;
+    outline: none;
     border-radius: 20px;
-    margin: 0 10px;
-    transition: 0.3s;
+    margin: 10px;
+    transition: 0.5s;
 }
 
 .buttons button:hover {
     background: #fff;
-    color: red;
+    color: rgb(207, 96, 88);
 }
 
-/* Responsive tasarım */
-@media (max-width: 768px) {
-    .navbar {
-        flex-direction: column;
-        height: auto;
-        padding: 10px;
-        gap: 10px;
-    }
+/* Slider */
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    height: 500px; /* Gerekirse daha yüksek yap */
+    margin: 30px auto;
+    overflow: hidden;
+    background-color: #000; /* Resim oranı bozulmasın diye arka plan */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-    .navbar ul {
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 6px;
-    }
 
-    .navbar ul li a {
-        font-size: 14px;
-        padding: 5px 8px;
-    }
+.slider {
+    display: flex;
+    width: 400%; /* 4 resim için */
+    transition: transform 0.5s ease-in-out;
+}
 
+.slider a {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+.slider a img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Tüm resim görünsün */
+    display: block;
+    background-color: #000; /* Opsiyonel: Arka plan rengi */
+}
+
+
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    font-size: 30px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+
+/* Responsive Tasarım */
+@media screen and (max-width: 768px) {
     .center h1 {
-        font-size: 32px;
+        font-size: 40px;
     }
 
     .center h2 {
-        font-size: 24px;
-    }
-
-    .center p, .center ul {
-        font-size: 16px;
+        font-size: 25px;
     }
 
     .buttons button {
         width: 120px;
-        height: 40px;
-        font-size: 14px;
+        font-size: 16px;
     }
 
-    .image-gallery img {
-        width: 80px;
-        height: 80px;
+    .slider a img {
+        height: 250px;
+    }
+
+    .navbar ul li a {
+        font-size: 16px;
+        padding: 6px 10px;
     }
 }

@@ -8,64 +8,75 @@
 </head>
 <body>
 
-    <div class="container">
-
-        <div class="navbar">
-            <ul>
-                <li><a href="/index.html">Ana Sayfa</a></li>
-                <li><a href="/hakkında.html">Hakkında</a></li>
-                <li><a href="/Özgeçmiş.html">Özgeçmiş</a></li>
-                <li><a href="/Şehrim.html" class="active">Şehrim</a></li>
-                <li><a href="/Mirasımız.html">Mirasımız</a></li>
-                <li><a href="/ilgi_alanlarım.html">İlgi Alanlarım</a></li>
-            </ul>
-        </div>
-
-        <div class="center">
-            <h1>Sakarya'ya Hoş Geldiniz</h1>
-            <p>Sakarya, Marmara Bölgesi'nde yer alan doğal güzellikleriyle ön plana çıkan bir şehirdir.</p>
-
-            <h2>Nüfus</h2>
-            <p>2023 yılı itibarıyla Sakarya'nın nüfusu yaklaşık 1 milyon 100 bindir.</p>
-
-            <h2>Gezilecek Yerler</h2>
-            <ul>
-                <li><a href="#sapanca">Sapanca Gölü</a></li>
-                <li><a href="#tarakli">Taraklı</a></li>
-                <li><a href="#nehir">Sakarya Nehri</a></li>
-                <li><a href="#karasu">Karasu Plajı</a></li>
-            </ul>
-
-            <div class="slider">
-                <a href="#sapanca"><img src="images/sapanca.jpg" alt="Sapanca Gölü"></a>
-                <a href="#tarakli"><img src="images/tarakli.jpg" alt="Taraklı"></a>
-                <a href="#nehir"><img src="images/nehir.jpg" alt="Sakarya Nehri"></a>
-                <a href="#karasu"><img src="images/karasu.jpg" alt="Karasu Plajı"></a>
-            </div>
-
-            <section id="sapanca">
-                <h2>Sapanca Gölü</h2>
-                <p>Sapanca Gölü, doğal güzelliğiyle ünlü, sakinliği ve manzarasıyla öne çıkan bir yerdir.</p>
-            </section>
-
-            <section id="tarakli">
-                <h2>Taraklı</h2>
-                <p>Tarihi Osmanlı evleri ve "yavaş şehir" unvanı ile dikkat çeker. Doğayla iç içe bir kasabadır.</p>
-            </section>
-
-            <section id="nehir">
-                <h2>Sakarya Nehri</h2>
-                <p>Türkiye'nin önemli nehirlerinden biri olan Sakarya Nehri, şehre ismini de vermiştir.</p>
-            </section>
-
-            <section id="karasu">
-                <h2>Karasu Plajı</h2>
-                <p>Karadeniz kıyısında yer alan Karasu, uzun kumsalı ve denizi ile yaz turizminin gözdesidir.</p>
-            </section>
-
-        </div>
-
+<div class="container">
+    <div class="navbar">
+        <ul>
+            <li><a href="/index.html">Ana Sayfa</a></li>
+            <li><a href="/hakkında.html">Hakkında</a></li>
+            <li><a href="/Özgeçmiş.html">Özgeçmiş</a></li>
+            <li><a href="/Şehrim.html" class="active">Şehrim</a></li>
+            <li><a href="/Mirasımız.html">Mirasımız</a></li>
+            <li><a href="/ilgi_alanlarım.html">İlgi Alanlarım</a></li>
+        </ul>
     </div>
+
+    <div class="center">
+        <h1>Sakarya</h1>
+        <h2>Doğasıyla, Tarihiyle, İnsanıyla Güzel Şehrim</h2>
+
+        <!-- SLIDER BAŞLANGIÇ -->
+    <div class="slider-container">
+        <div class="slider">
+            <a href="https://tr.wikipedia.org/wiki/Sapanca_Gölü"><img src="images/sakarya1.jpg" alt="Sakarya 1"></a>
+            <a href="https://sakaryalife.com/geyve-bogazi/"><img src="images/sakarya2.jpg" alt="Sakarya 2"></a>
+            <a href="https://www.tripadvisor.com.tr/Tourism-g3526453-Tarakli_Sakarya_Province-Vacations.html"><img src="images/sakarya3.jpg" alt="Sakarya 3"></a>
+            <a href="http://www.karasu.gov.tr/karasu-havadan-gorunum"><img src="images/sakarya4.jpg" alt="Sakarya 4"></a>
+        </div>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+    </div>
+
+        <!-- SLIDER BİTİŞ -->
+
+        <p class="sehir-info">
+            Sakarya, Marmara Bölgesi'nde yer alan, hem doğal güzellikleri hem de tarihi ile dikkat çeken bir ildir. Yaklaşık 1 milyonluk nüfusu ile gelişen bir şehir olan Sakarya, Karadeniz'e kıyısı olan Karasu ve Kocaali gibi turistik ilçelere sahiptir. Sapanca Gölü, Acarlar Longozu ve yaylaları ile doğaseverler için mükemmel bir destinasyondur.
+        </p>
+
+        <div class="buttons">
+            <a href="/Login.php"><button>Login</button></a>
+            <a href="/İletişim.html"><button>İletişim</button></a>
+        </div>
+    </div>
+</div>
+
+<script>
+  const slider = document.querySelector('.slider');
+  const slides = document.querySelectorAll('.slider a');
+  const nextBtn = document.querySelector('.next');
+  const prevBtn = document.querySelector('.prev');
+
+  let currentIndex = 0;
+
+  function showSlide(index) {
+    if (index >= slides.length) {
+      currentIndex = 0;
+    } else if (index < 0) {
+      currentIndex = slides.length - 1;
+    } else {
+      currentIndex = index;
+    }
+    slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+
+  nextBtn.addEventListener('click', () => showSlide(currentIndex + 1));
+  prevBtn.addEventListener('click', () => showSlide(currentIndex - 1));
+
+  // Otomatik geçiş
+  setInterval(() => {
+    showSlide(currentIndex + 1);
+  }, 5000); // 5 saniyede bir
+</script>
+
 
 </body>
 </html>
